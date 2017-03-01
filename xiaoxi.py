@@ -10,6 +10,7 @@ import json
 red = '\033[01;33m'  # {green:'\033[0;32m',yellow:'\033[0;33m',blue:'\033[0;34m'}
 green = '\033[0;32m'
 black = '\033[0m'
+
 #想正确显示天气请更改本地的天气代码：http://www.360doc.com/content/14/0322/07/59625_362614659.shtml
 weatherId = '101210501' #(这是绍兴的天气ID)
 #clock:
@@ -28,8 +29,8 @@ weatherInfo = weatherJSON['weatherinfo']
 
 def caletool():
     cal = calendar.month(int(year),int(month))
+    cal = cal[cal.index('\n'):]
     mycale = cal[0:cal.index(day)] + red + cal[cal.index(day):cal.index(day) +len(day)] + black +cal[cal.index(day) +len(day):]
-    mycale = mycale[mycale.index('\n'):]
     print(mycale)
 def welcome():
     whoami =  os.popen('whoami', mode='r').read()
