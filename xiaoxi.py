@@ -7,10 +7,10 @@ import time,os
 import urllib.request
 import json
 #color:
-redFont = '\033[01;33m'  # {green:'\033[0;32m',yellow:'\033[0;33m',blue:'\033[0;34m'}
-greenFont = '\033[0;32m'
-blackFont = '\033[0m'
-
+fontColor =  {'red':'\033[01;33m','black':'\033[0m','green':'\033[0;32m','yellow':'\033[0;33m','blue':'\033[0;34m'}
+calendarColor   = fontColor['yellow']
+weatherColor    = fontColor['green']
+blackColor      = fontColor['black']
 #想正确显示天气请更改本地的天气代码：http://www.360doc.com/content/14/0322/07/59625_362614659.shtml
 weatherId = '101210501' #(这是绍兴的天气ID)
 #clock:
@@ -29,20 +29,19 @@ weatherInfo = weatherJSON['weatherinfo']
 def caletool():     #输出日历
     cal = calendar.month(int(year),int(month))
     cal = cal[cal.index('\n'):]     #防止自动输出的年份影响下面字体颜色的输出
-    mycale = cal[0:cal.index(day)] + redFont + cal[cal.index(day):cal.index(day) +len(day)] + blackFont +cal[cal.index(day) +len(day):]
+    mycale = cal[0:cal.index(day)] + calendarColor + cal[cal.index(day):cal.index(day) +len(day)] + blackColor +cal[cal.index(day) +len(day):]
     print(mycale)
 
 
 def welcome():      #天气模块
     whoami =  os.popen('whoami', mode='r').read()
     print('Hello ! ' + whoami +'我是小管家小溪,今天是' + weatherInfo['date_y'])
-    print('今天的天气是' + greenFont + weatherInfo['weather1'] + blackFont + ',温度是' +greenFont+ weatherInfo['temp1'] +blackFont+ ',风向是' +greenFont+ weatherInfo['wind1'] +blackFont)
-    print('明天的天气是' + greenFont + weatherInfo['weather2'] + blackFont + ',温度是' +greenFont+ weatherInfo['temp2'] +blackFont+ ',风向是' +greenFont+ weatherInfo['wind2'] +blackFont)
-    print('后天的天气是' + greenFont + weatherInfo['weather3'] + blackFont + ',温度是' +greenFont+ weatherInfo['temp3'] +blackFont+ ',风向是' +greenFont+ weatherInfo['wind3'] +blackFont)
+    chinaDay = ['今天', '明天', '后天']
+    for x in range(0, 3):
+        i = str(x + 1)
+        print(chinaDay[x] + '的天气是' +weatherColor+ weatherInfo['weather'+i] +blackColor+ ',温度是' +weatherColor+
+              weatherInfo['temp'+i] +blackColor+ ',风向是' +weatherColor+ weatherInfo['wind'+i] +blackColor)
     caletool()
 
 if __name__ == '__main__':
     welcome()
-
-
-
